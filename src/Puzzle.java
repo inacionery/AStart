@@ -4,8 +4,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Puzzle {
-	private static Set<Node> open = new LinkedHashSet<Node>();
-	private static Set<Node> close = new LinkedHashSet<Node>();
+	private static Set<Node> close = new LinkedHashSet<>();
+	private static Set<Node> open = new LinkedHashSet<>();
 
 	public static void main(String[] args) {
 		Integer[][] startMatrix = { { 1, 8, 2 }, { null, 4, 3 }, { 7, 6, 5 } };
@@ -22,7 +22,7 @@ public class Puzzle {
 			System.out.println("\nCurrent");
 			System.out.println(cur);
 
-			if (cur.h(goalMatrix) == 0) {
+			if (cur.h2(goalMatrix) == 0) {
 				break;
 			}
 
@@ -42,7 +42,7 @@ public class Puzzle {
 			open.remove(cur);
 
 			open = open.stream()
-					.sorted(Comparator.comparingInt(Node::getF).thenComparing(Comparator.comparingInt(Node::getH))
+					.sorted(Comparator.comparingDouble(Node::getF).thenComparing(Comparator.comparingDouble(Node::getH))
 							.thenComparing(Comparator.comparingInt(Node::getG)))
 					.collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -60,8 +60,9 @@ public class Puzzle {
 		int maxLines = 0;
 		for (int i = 0; i < input.length; i++) {
 			columns[i] = input[i].split("\n");
-			if (columns[i].length > maxLines)
+			if (columns[i].length > maxLines) {
 				maxLines = columns[i].length;
+			}
 		}
 
 		// Store an array of column widths
@@ -69,9 +70,11 @@ public class Puzzle {
 		// calculate column widths
 		for (int i = 0; i < input.length; i++) {
 			int maxWidth = 0;
-			for (int j = 0; j < columns[i].length; j++)
-				if (columns[i][j].length() > maxWidth)
+			for (int j = 0; j < columns[i].length; j++) {
+				if (columns[i][j].length() > maxWidth) {
 					maxWidth = columns[i][j].length();
+				}
+			}
 			widths[i] = maxWidth + 1;
 		}
 
