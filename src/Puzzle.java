@@ -11,7 +11,7 @@ public class Puzzle {
 		Integer[][] startMatrix = { { 1, 8, 2 }, { null, 4, 3 }, { 7, 6, 5 } };
 		Integer[][] goalMatrix = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, null } };
 
-		Node startNode = new Node(0, startMatrix,  goalMatrix);
+		Node startNode = new Node(0, startMatrix, goalMatrix);
 
 		open.add(startNode);
 		int i = 0;
@@ -41,7 +41,9 @@ public class Puzzle {
 
 			open.remove(cur);
 
-			open = open.stream().sorted(Comparator.comparingInt(Node::getF))
+			open = open.stream()
+					.sorted(Comparator.comparingInt(Node::getF).thenComparing(Comparator.comparingInt(Node::getH))
+							.thenComparing(Comparator.comparingInt(Node::getG)))
 					.collect(Collectors.toCollection(LinkedHashSet::new));
 
 			System.out.println("Frontier");

@@ -9,15 +9,22 @@ public class Node {
 	private int h;
 	private Integer[][] matrix = new Integer[3][3];
 
-	
 	public int getF() {
 		return f;
+	}
+
+	public int getH() {
+		return h;
+	}
+
+	public int getG() {
+		return g;
 	}
 
 	public Node(int g, Integer[][] matrix, Integer[][] goalMatrix) {
 		this.g = g;
 		this.matrix = matrix;
-		
+
 		this.f = f(goalMatrix);
 		this.h = h(goalMatrix);
 	}
